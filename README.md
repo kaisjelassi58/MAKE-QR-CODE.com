@@ -1,1 +1,0 @@
-# MAKE-QR-CODE.com
