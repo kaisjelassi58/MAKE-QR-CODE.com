@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Code Generator</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            flex-direction: column;
+        }
+
+        #input-container {
+            margin-bottom: 20px;
+        }
+
+        #input-text {
+            padding: 10px;
+            font-size: 16px;
+            margin-right: 10px;
+        }
+
+        #generate-btn,
+        #download-btn {
+            padding: 10px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        #qrcode {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div id="input-container">
+        <label for="input-text">Enter text:</label>
+        <input type="text" id="input-text" placeholder="Type your text">
+        <button id="generate-btn" onclick="generateQRCode()">Generate QR Code</button>
+    </div>
+
+    <div id="qrcode"></div>
+
+    <button id="download-btn" onclick="downloadQRCode()">Download QR Code</button>
+
+    <script src="https://cdn.jsdelivr.net/gh/davidshimjs/qrcodejs/qrcode.min.js"></script>
+
+    <script>
+        var qrcode;
+
+        function generateQRCode() {
+            var inputText = document.getElementById('input-text').value;
+
+            if (inputText.trim() === '') {
+                alert('Please enter some text.');
+                return;
+            }
+
+            // Clear existing QR code
+            document.getElementById("qrcode").innerHTML = '';
+
+            // Generate new QR code
+            qrcode = new QRCode(document.getElementById("qrcode"), {
+                text: inputText,
+                width: 128,
+                height: 128
+            });
+        }
+
+        
+        function downloadQRCode() {
+    if (!qrcode) {
+        alert('Please generate a QR code first.');
+        return;
+    }
+
+    // Get the QR code as a data URL
+    var dataURL = qrcode.toDataURL('image/png');
+
+    // Create a link element
+    var link = document.createElement('a');
+    link.href = dataURL;
+
+    // Set the download attribute with a suggested filename
+    link.download = 'qrcode.png';
+
+    // Create a click event on the link
+    var event = new MouseEvent('click', {
+        bubbles: true,
+        cancelable: true,
+        view: window
+    });
+
+    // Dispatch the click event
+    link.dispatchEvent(event);
+}
+
+    </script>
+</body>
+</html>
+<script>
+    var qrcode;
+
+    function generateQRCode() {
+        var inputText = document.getElementById('input-text').value;
+
+        if (inputText.trim() === '') {
+            alert('Please enter some text.');
+            return;
+        }
+
+        // Clear existing QR code
+        document.getElementById("qrcode").innerHTML = '';
+
+        // Generate new QR code
+        qrcode = new QRCode(document.getElementById("qrcode"), {
+            text: inputText,
+            width: 128,
+            height: 128
+        });
+    }
+
+    function downloadQRCode() {
+        console.log('Download QR Code function called.');
+
+        if (!qrcode) {
+            alert('Please generate a QR code first.');
+            return;
+        }
+
+        // Get the QR code as a data URL
+        var dataURL = qrcode.toDataURL('image/png');
+
+        // Create a link element
+        var link = document.createElement('a');
+        link.href = dataURL;
+
+        // Set the download attribute with a suggested filename
+        link.download = 'qrcode.png';
+
+        // Create a click event on the link
+        var event = new MouseEvent('click', {
+            bubbles: true,
+            cancelable: true,
+            view: window
+        });
+
+        // Dispatch the click event
+        link.dispatchEvent(event);
+    }
+</script>
